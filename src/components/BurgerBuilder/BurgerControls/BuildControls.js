@@ -5,22 +5,23 @@ import BuildControl from './BuildControl/BuildControl'
 const buildControls = (props) => {
 
 
-    let buildControlList = props.listControls.map((ingredient) => {
-        return <BuildControl label={ingredient.label} />
+    let totalPrice = props.totalPrice
+    let buildControlList = props.ingredientsProps.map((ingredient) => {
+        return <BuildControl
+            label={ingredient.label}
+            count={ingredient.count}
+            added={() => { props.methodAdd(ingredient) }}
+            removed={() => { props.methodRemove(ingredient) }}
+        />
     })
 
 
 
     return (
         <div className={classes.BuildControls}>
-            <p>total price is : 4TND</p>
+            <p>total price is : {totalPrice}</p>
             <div>
                 {buildControlList}
-
-                {/* <BuildControl label="cheese" />
-                <BuildControl label="meat" />
-                <BuildControl label="salad" />
-                <BuildControl label="escalope" /> */}
             </div>
             <button className={classes.OrderButton}>Order Now</button>
 

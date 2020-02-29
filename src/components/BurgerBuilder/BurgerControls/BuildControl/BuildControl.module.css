@@ -56,3 +56,7 @@
     background-color: #99703F;
     color: white;
 }
+
+.disabled {
+    background-color: blue;
+}
