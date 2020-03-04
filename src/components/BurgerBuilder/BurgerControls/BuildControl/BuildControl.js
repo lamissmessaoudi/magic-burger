@@ -7,8 +7,21 @@ const buildControl = (props) => {
             <div className={classes.Label}>
                 {props.label}
             </div>
-            <button onClick={props.removed} className={classes.Less} disabled={(props.count <= 0)}>Less</button>
-            <button onClick={props.added} className={classes.More}>More</button>
+            <button
+                onClick={props.removed}
+                className={classes.Less}
+                //disabled={(props.count <= 0)}
+                disabled={props.disableRemoving}
+            >
+                Less
+            </button>
+            <button
+                onClick={props.added}
+                className={classes.More}
+                disabled={(props.count >= props.max)}
+            >
+                More
+            </button>
 
         </div>
     )
