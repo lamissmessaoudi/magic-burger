@@ -1,57 +1,42 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import Burger from './Burger/Burger'
 import BuildControls from './BurgerControls/BuildControls'
+import axios from 'axios'
+
 class BurgerBuilder extends Component {
   state = {
-    ingredients: [
-      {
-        id: 0,
-        label: 'salad',
-        count: 0,
-        price: 0.5,
-        max: 2,
-
-      },
-      {
-        id: 1,
-        label: 'escalope',
-        count: 0,
-        price: 3.8,
-        max: 2,
-      },
-      {
-        id: 2,
-        label: 'meat',
-        count: 0,
-        price: 5.3,
-        max: 2,
-      },
-      {
-        id: 3,
-        label: 'cheese',
-        count: 0,
-        price: 2.3,
-        max: 2,
-      }
-    ],
+    ingredients: [],
     totalPrice: 4
   }
 
-  // addIngredients = (ingredientId) => {
-  //   const newIngredients = [...this.state.ingredients];
-  //   const index = newIngredients.findIndex((ingredient) => {
-  //     return ingredient.id === ingredientId
-  //   })
-  //   newIngredients[index].count++;
-  //   this.setState({
-  //     ingredients: newIngredients,
-  //     totalPrice: (this.state.totalPrice + this.state.ingredients[index].price)
-  //   });
-  // };
+
+  componentDidMount() {
+
+    this.getIngredientsFromServer()
+  }
+
+  getIngredientsFromServer = () => {
+
+    axios.get('http://51.75.20.206:3100/ingredients')
+
+      .then((response) => {
+        console.log(response.data.ingredients)
+        this.setState({
+          ingredients: response.data.ingredients
+        })
+      })
+
+      .catch((error) => {
+        console.log(error)
+      })
+
+  }
 
   changeIngredients = (ingredientId, action) => {
+
     const newIngredients = [...this.state.ingredients];
     let newTotalPrice = this.state.totalPrice
+
     const index = newIngredients.findIndex((ingredient) => {
       return ingredient.id === ingredientId
     })
@@ -67,8 +52,8 @@ class BurgerBuilder extends Component {
 
       newIngredients[index].count--;
       newTotalPrice -= this.state.ingredients[index].price
-
     }
+
     this.setState({
       ingredients: newIngredients,
       totalPrice: newTotalPrice
@@ -79,7 +64,7 @@ class BurgerBuilder extends Component {
 
 
   render() {
-    return <div>
+    return (<div>
       <Burger ingredientsProps={this.state.ingredients} />
       <BuildControls
         ingredientsProps={this.state.ingredients}
@@ -87,7 +72,10 @@ class BurgerBuilder extends Component {
         totalPrice={this.state.totalPrice}
       />
 
-    </div>;
+    </div>);
   }
 }
+
+
+
 export default BurgerBuilder;
