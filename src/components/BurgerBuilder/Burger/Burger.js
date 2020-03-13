@@ -4,12 +4,33 @@ import Ingredient from "./Ingredient/Ingredient";
 
 const burger = (props) => {
 
+  ///  SANS ORDERE
+  // let ingredientComponents = []
+  // for (let ingredient of props.ingredientsProps)
+  //   for (let i = 0; i < ingredient.count; i++)
+  //     ingredientComponents.push(<Ingredient
+  //       key={ingredient.id + ' ' + i}
+  //       type={ingredient.label} />)
+
+  ///  AVEC ORDERE
   let ingredientComponents = []
-  for (let ingredient of props.ingredientsProps)
-    for (let i = 0; i < ingredient.count; i++)
-      ingredientComponents.push(<Ingredient
-        key={ingredient.id + ' ' + i}
-        type={ingredient.label} />)
+  for (let ident of props.positionProps) {
+
+    let ingredientAA
+    props.ingredientsProps.map((ingredientFound) => {
+      if (ingredientFound.id === ident)
+        return ingredientAA = ingredientFound
+
+    })
+
+    ingredientComponents.push(
+      <Ingredient
+        key={ingredientAA.id + ' ' + ingredientComponents.length}
+        type={ingredientAA.label}
+      />
+    )
+
+  }
 
 
   let message = null

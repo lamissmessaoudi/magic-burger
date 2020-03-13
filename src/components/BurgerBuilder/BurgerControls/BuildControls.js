@@ -4,8 +4,6 @@ import BuildControl from './BuildControl/BuildControl'
 
 const buildControls = (props) => {
 
-
-    let totalPrice = props.totalPrice
     let buildControlList = props.ingredientsProps.map((ingredient) => {
         return <BuildControl
             key={ingredient.id}
@@ -19,14 +17,16 @@ const buildControls = (props) => {
     })
 
 
-
     return (
         <div className={classes.BuildControls}>
             <p>total price is : {props.totalPrice.toFixed(2)} TND</p>
             <div>
                 {buildControlList}
             </div>
-            <button className={classes.OrderButton}>Order Now</button>
+            <button className={classes.OrderButton}
+                onClick={props.showOrHideOrderedSummery}>
+                Order Now
+            </button>
 
         </div>
     )
