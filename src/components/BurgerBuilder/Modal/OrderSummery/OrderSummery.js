@@ -22,7 +22,7 @@ const orderSummery = (props) => {
             <p>Continue to Checkout?</p>
 
             <button className={classes.Button + ' ' + classes.Success}>Order</button>
-            <button className={classes.Button + ' ' + classes.Danger}>CANCEL</button>
+            <button className={classes.Button + ' ' + classes.Danger} onClick={props.showOrHideOrderedSummery}>CANCEL</button>
 
         </div>
     )

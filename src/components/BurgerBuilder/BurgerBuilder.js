@@ -4,17 +4,20 @@ import BuildControls from './BurgerControls/BuildControls'
 import axios from '../../utils/axios'
 import Modal from './Modal/Modal'
 import OrderSummery from './Modal/OrderSummery/OrderSummery'
+import loadingGif from '../../assets/images/loading.gif'
+
 
 class BurgerBuilder extends Component {
   state = {
     ingredients: [],
     totalPrice: 5,
     ordered: true,
+    isLoading: true,
+    errorMessage: '',
     ingredientsPosition: [] ///Pour Ordonner Le Burger 
   }
 
-  componentDidMount() {
-
+  componentDidMount = () => {
     this.getBasicPriceFromServer()
     this.getIngredientsFromServer()
   }
@@ -36,12 +39,19 @@ class BurgerBuilder extends Component {
         })
 
         this.setState({
-          ingredients: ingredients //<= ingredients is the tab from above
+          ingredients: ingredients, //<= ingredients is the tab from above
+          ordered: false,
+          isLoading: false,
+
         })
       })
 
       .catch((error) => {
         console.log(error)
+        this.setState({
+          errorMessage: 'Something went wrong : ' + error.message
+
+        })
       })
   }
 
@@ -111,7 +121,39 @@ class BurgerBuilder extends Component {
   }
 
 
+
+
   render() {
+
+    let modalContent = null
+    if (this.state.isLoading) {
+      modalContent = (
+        <div>
+          <div style={{ display: 'flex' }}>
+            <h3 style={{ width: '80%' }}>
+              fetching data from server
+            </h3>
+            <img
+              style={{ width: '60px', height: '60px', }}
+              src={loadingGif}
+              alt="loading" />
+          </div>
+          <div>
+            {this.state.errorMessage}
+          </div>
+        </div>
+
+      )
+    } else {
+      modalContent = (
+        <OrderSummery
+          ingredients={this.state.ingredients}
+          totalPrice={this.state.totalPrice}
+          showOrHideOrderedSummery={this.showOrHideOrderedSummeryHandler}
+        />
+      )
+    }
+
     return (<div>
       <Burger
         ingredientsProps={this.state.ingredients}
@@ -128,10 +170,7 @@ class BurgerBuilder extends Component {
         show={this.state.ordered}
         totalPrice={this.state.totalPrice}
       >
-        <OrderSummery
-          ingredients={this.state.ingredients}
-          totalPrice={this.state.totalPrice}
-          clicked={this.showOrHideOrderSummaryHandler} />
+        {modalContent}
       </Modal>
 
     </div>);
