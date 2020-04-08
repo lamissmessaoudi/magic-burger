@@ -4,8 +4,10 @@ import classes from './OrderSummery.module.css'
 const orderSummery = (props) => {
 
     const content = props.ingredients.map((ingredient) => {
-        return <li>
+        return <li key={ingredient.id}>
             {ingredient.label} : {ingredient.count}
+
+
         </li>
     })
 
@@ -21,11 +23,21 @@ const orderSummery = (props) => {
             <p><strong>Total Price: {props.totalPrice.toFixed(2)}</strong></p>
             <p>Continue to Checkout?</p>
 
-            <button className={classes.Button + ' ' + classes.Success}>Order</button>
-            <button className={classes.Button + ' ' + classes.Danger} onClick={props.showOrHideOrderedSummery}>CANCEL</button>
+            <button
+                className={classes.Button + ' ' + classes.Success}
+                onClick={props.sendOrder}>
+                Continue
+            </button>
+
+            <button
+                className={classes.Button + ' ' + classes.Danger}
+                onClick={props.showOrHideOrderedSummery}>
+                CANCEL
+            </button>
 
         </div>
     )
 }
 
 export default orderSummery
+

@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./Burger.module.css";
 import Ingredient from "./Ingredient/Ingredient";
+import ingredient from "./Ingredient/Ingredient";
 
 const burger = (props) => {
 
@@ -16,12 +17,14 @@ const burger = (props) => {
   let ingredientComponents = []
   for (let ident of props.positionProps) {
 
-    let ingredientAA
-    props.ingredientsProps.map((ingredientFound) => {
-      if (ingredientFound.id === ident)
-        return ingredientAA = ingredientFound
+    // let ingredientAA
+    // props.ingredientsProps.map((ingredientFound) => {
+    //   if (ingredientFound.id === ident)
+    //     return ingredientAA = ingredientFound })
 
-    })
+    let ingredientAA = props.ingredientsProps.find(
+      ingredient => ingredient.id == ident
+    )
 
     ingredientComponents.push(
       <Ingredient

@@ -5,6 +5,7 @@ import axios from '../../utils/axios'
 import Modal from './Modal/Modal'
 import OrderSummery from './Modal/OrderSummery/OrderSummery'
 import loadingGif from '../../assets/images/loading.gif'
+import burger from "./Burger/Burger"
 
 
 class BurgerBuilder extends Component {
@@ -72,6 +73,48 @@ class BurgerBuilder extends Component {
 
   }
 
+
+
+  sendOrderHandler = () => {
+
+    // axios.post(
+    //   'http://51.75.20.206:3100/burger',
+    //   { burger: this.state.ingredients })
+
+    this.setState({
+      isLoading: true,
+
+    })
+
+
+    axios.post('burger', { burger: this.state.ingredients })
+
+
+
+      .then((response) => {
+
+        console.log(response);
+        //status: 200 => everything worked alright 
+
+        this.setState({
+          ordered: false,
+          isLoading: false,
+
+        })
+
+      })
+
+      .catch((error) => {
+        console.log(error)
+        this.setState({
+          errorMessage: 'Something went wrong : ' + error.message
+
+        })
+      })
+
+  }
+
+
   changeIngredients = (ingredientId, action) => {
 
     const newIngredients = [...this.state.ingredients];
@@ -121,8 +164,6 @@ class BurgerBuilder extends Component {
   }
 
 
-
-
   render() {
 
     let modalContent = null
@@ -150,6 +191,7 @@ class BurgerBuilder extends Component {
           ingredients={this.state.ingredients}
           totalPrice={this.state.totalPrice}
           showOrHideOrderedSummery={this.showOrHideOrderedSummeryHandler}
+          sendOrder={this.sendOrderHandler}
         />
       )
     }

@@ -4,20 +4,20 @@ import classes from "./Ingredient.module.css";
 const ingredient = (props) => {
   let ingredient = null;
   switch (props.type) {
-    case 'cheese':
+    case 'Cheese':
       ingredient = <div className={classes.Cheese}></div>;
       break;
-    case "meat":
+    case "Meat":
       ingredient = <div className={classes.Meat}></div>;
       break;
-    case "escalope":
+    case "Escalope":
       ingredient = <div className={classes.Escalope}></div>;
       break;
 
     case "bread-bottom":
       ingredient = <div className={classes.BreadBottom}></div>;
       break;
-    case "salad":
+    case "Salad":
       ingredient = <div className={classes.Salad}></div>;
       break;
     case "bread-top":
